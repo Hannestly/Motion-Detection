@@ -3,7 +3,7 @@ import numpy as np
 import imutils
  
 
-vid = cv2.VideoCapture('C:\\Users\\100488516\\Desktop\\PythonProgram\\motionDetec\\vid2.mp4')
+vid = cv2.VideoCapture('C:\\Users\\100488516\\Desktop\\PythonProgram\\motionDetec\\vid1.mp4')
 prev_frame = None
 
 def checkMoving(frame,dimension,ogframe):

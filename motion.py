@@ -3,7 +3,7 @@ import numpy as np
 import imutils
  
 
-vid = cv2.VideoCapture('C:\\Users\\100488516\\Desktop\\PythonProgram\\motionDetec\\vid1.mp4')
+vid = cv2.VideoCapture(0)
 prev_frame = None
 
 def checkMoving(frame,dimension,ogframe):
@@ -15,7 +15,7 @@ def checkMoving(frame,dimension,ogframe):
         while x1 +20 <= dimension[0]:
 
             frameCheck = frame[x1:x1+20,y1:y1+20]
-            if frameCheck.sum() > 80300 or frameCheck.sum() < 79500:
+            if frameCheck.sum() > 83000 or frameCheck.sum() < 79500:
                 print("moving",x1,y1)
                 print(ogframe.shape)
                 cv2.rectangle(ogframe,(y1,x1),(y1+20,x1+20),(0,0,255),2)                
@@ -28,11 +28,11 @@ while(True):
     ret,frame = vid.read()
     frame = imutils.resize(frame,width= 800)
     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-    neg = gray +200
+    neg = gray + 200
 
     if prev_frame is not None:
 
-        dif = abs(prev_frame - gray)
+        dif = prev_frame - gray
         cv2.imshow('difference',dif)
         checkMoving(dif,dif.shape,frame)
 

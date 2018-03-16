@@ -14,7 +14,7 @@ disclaimer: The following algorithm utilizes OpenCV library to achieve three thi
 - enter the address of the video you want to track by editing line <b>6</b>
 
 ```python
-vid = cv2.VideoCapture('address of your video</b>')
+vid = cv2.VideoCapture('address of your video')
 ```
 - compile the motion.py 
 

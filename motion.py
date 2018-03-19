@@ -1,8 +1,8 @@
 import cv2 
-import numpy as np 
+import numpy as np  
 import imutils
  
-vid = cv2.VideoCapture(r'C:\Users\100488516\Desktop\PythonProgram\motionDetec\vid1.mp4') #Calling the source video as the variable 'vid
+vid = cv2.VideoCapture('insert your video here') #Calling the source video as the variable 'vid
 prev_frame = None #empty variable to contain the previous frame
 
 '''
@@ -10,21 +10,40 @@ checkMoving function takes in three arguments -difference frame, dimension of th
 for every 20X20 pixels square in the difference frame, if the sum of all the pixel's grey value is different than 200 * 9, it is asuumed
 that the movement is detected. 
 '''
+
 def checkMoving(frame,dimension,ogframe):
+    rect = []
     x1 = 0
     y1 = 0
-
-    while y1 + 20 <= dimension[1]:
+    while y1 + 20 <= dimension[0]:
         x1 = 0
-        while x1 +20 <= dimension[0]:
-
-            frameCheck = frame[x1:x1+20,y1:y1+20]
+        while x1 +20 <= dimension[1]:
+            frameCheck = frame[y1:y1+20,x1:x1+20]
             if frameCheck.sum() > 82000 or frameCheck.sum() < 79000:
-                print("moving",x1,y1)
-                print(ogframe.shape)
-                cv2.rectangle(ogframe,(y1,x1),(y1+20,x1+20),(0,0,255),2)                
+                if len(rect)== 0:
+                    rect.append([x1,y1,x1+20,y1+20])
+                else:
+                    for i in rect:
+                        if i[0]-70 < x1 and i[1]-70 < y1 and i[2]+70 > x1 and i[3]+70 > y1:
+                            if i[0] > x1:
+                                i[0] = x1
+                            if i[2] < x1 +20:
+                                i[2] = x1+20
+                            if i[3] < y1 +20:
+                                i[3] = y1+20
+
+                        else:
+                            print("appending new")
+                            rect.append([x1,y1,x1+20,y1+20])
+                        
+                        
             x1 +=20
         y1 += 20 
+    for e in rect:
+        cv2.rectangle(ogframe,(e[0],e[1]),(e[2],e[3]),(0,0,255),2)  
+
+
+
 
 
             

@@ -2,7 +2,7 @@ import cv2
 import numpy as np  
 import imutils
  
-vid = cv2.VideoCapture('insert your video here') #Calling the source video as the variable 'vid
+vid = cv2.VideoCapture('vid1.mp4') #Calling the source video as the variable 'vid
 prev_frame = None #empty variable to contain the previous frame
 
 '''
@@ -13,38 +13,35 @@ that the movement is detected.
 
 def checkMoving(frame,dimension,ogframe):
     rect = []
-    x1 = 0
-    y1 = 0
-    while y1 + 20 <= dimension[0]:
-        x1 = 0
-        while x1 +20 <= dimension[1]:
-            frameCheck = frame[y1:y1+20,x1:x1+20]
-            if frameCheck.sum() > 82000 or frameCheck.sum() < 79000:
-                if len(rect)== 0:
-                    rect.append([x1,y1,x1+20,y1+20])
-                else:
-                    for i in rect:
-                        if i[0]-70 < x1 and i[1]-70 < y1 and i[2]+70 > x1 and i[3]+70 > y1:
-                            if i[0] > x1:
-                                i[0] = x1
-                            if i[2] < x1 +20:
-                                i[2] = x1+20
-                            if i[3] < y1 +20:
-                                i[3] = y1+20
+    x = 0
+    y = 0
+    while y + 20 <= dimension[0]:
+        x = 0
+        while x +20 <= dimension[1]:
+            frameCheck = frame[y:y+20,x:x+20]
+            if frameCheck.sum() > 80400 or frameCheck.sum() < 79000:
+                rect.append([x,y,x+20,y+20])
+            x +=20
+        y += 20 
 
-                        else:
-                            print("appending new")
-                            rect.append([x1,y1,x1+20,y1+20])
-                        
-                        
-            x1 +=20
-        y1 += 20 
-    for e in rect:
-        cv2.rectangle(ogframe,(e[0],e[1]),(e[2],e[3]),(0,0,255),2)  
-
-
-
-
+    if len(rect) != 0:
+        x1 = rect[0][0]
+        y1 = rect[0][1]
+        x2 = rect[0][2]
+        y2 = rect[0][3]
+        index = 1
+        while index < len(rect):
+            if rect[index][0] < x1:
+                x1 = rect[index][0]
+            if rect[index][1] < y1:
+                y1 = rect[index][1]
+            if rect[index][2] > x2:
+                x2 = rect[index][2]
+            if rect[index][3] > y2:
+                y2 = rect[index][3]
+            index +=1
+        
+        cv2.rectangle(ogframe,(x1,y1),(x2,y2),(0,0,255),2) 
 
             
 

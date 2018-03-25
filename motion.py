@@ -2,7 +2,7 @@ import cv2
 import numpy as np  
 import imutils
  
-vid = cv2.VideoCapture('snow.mp4') #Calling the source video as the variable 'vid
+vid = cv2.VideoCapture('vid4.mp4') #Calling the source video as the variable 'vid
 prev_frame = None #empty variable to contain the previous frame
 
 '''
@@ -14,8 +14,6 @@ that the movement is detected.
 def overlap(recList, length):
     if length == 1:
         return recList
-    if len(recList) == length:
-        return recList
     else: 
         x1 = recList[0][0]
         y1 = recList[0][1]
@@ -24,7 +22,7 @@ def overlap(recList, length):
         index = 1
         ogLength = len(recList)
         while index < ogLength:
-            if x1-70 < recList[index][0] and y1-70 < recList[index][1] and x2+70 > recList[index][0] and y2+70 > recList[index][1]:
+            if x1-70 <= recList[index][0] and y1-70 < recList[index][1] :
                 if x1 > recList[index][0]:
                     x1 = recList[index][0]
                 if y1 > recList[index][1]:
@@ -39,6 +37,8 @@ def overlap(recList, length):
                 index += 1
         recList.append([x1,y1,x2,y2])
         recList = recList[ogLength:]
+        if len(recList) == length:
+            return recList
         return(recList,ogLength)
 
 
@@ -60,6 +60,7 @@ def checkMoving(frame,dimension,ogframe):
             cv2.rectangle(ogframe,(rect[0][0],rect[0][1]),(rect[0][2],rect[0][3]),(0,0,255),2)
         else:
             rectangles = overlap(rect,0)
+            print(rectangles)
             for i in range(0,len(rectangles[0])):
                 cv2.rectangle(ogframe,(rectangles[0][i][0],rectangles[0][i][1]),(rectangles[0][i][2],rectangles[0][i][3]),(0,0,255),2)
             

@@ -1,8 +1,8 @@
-import cv2 
+import cv2 as cv2
 import numpy as np  
 import imutils
  
-vid = cv2.VideoCapture('vid4.mp4') #Calling the source video as the variable 'vid
+vid = cv2.VideoCapture('vid3.mp4') #Calling the source video as the variable 'vid
 prev_frame = None #empty variable to contain the previous frame
 
 '''
@@ -39,7 +39,7 @@ def overlap(recList, length):
         recList = recList[ogLength:]
         if len(recList) == length:
             return recList
-        return(recList,ogLength)
+        return overlap(recList,ogLength)
 
 
 def checkMoving(frame,dimension,ogframe):
@@ -61,17 +61,11 @@ def checkMoving(frame,dimension,ogframe):
         else:
             rectangles = overlap(rect,0)
             print(rectangles)
-            for i in range(0,len(rectangles[0])):
-                cv2.rectangle(ogframe,(rectangles[0][i][0],rectangles[0][i][1]),(rectangles[0][i][2],rectangles[0][i][3]),(0,0,255),2)
             
-    
-            
-                    
+            for i in range(0,len(rectangles)):
+                cv2.rectangle(ogframe,(rectangles[i][0],rectangles[i][1]),(rectangles[i][2],rectangles[i][3]),(0,0,255),2)
 
-            
-        
 
-            
 
 while(True):
     

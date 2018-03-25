@@ -22,7 +22,7 @@ def overlap(recList, length):
         index = 1
         ogLength = len(recList)
         while index < ogLength:
-            if x1-70 <= recList[index][0] and y1-70 < recList[index][1] :
+            if x1-70 <= recList[index][0] and y1-70 < recList[index][1] and x2 +70 >= recList[index][0] and y2+70 >= recList[index][1]:
                 if x1 > recList[index][0]:
                     x1 = recList[index][0]
                 if y1 > recList[index][1]:

@@ -1,8 +1,9 @@
 import cv2 as cv2
 import numpy as np  
 import imutils
- 
-vid = cv2.VideoCapture('vid3.mp4') #Calling the source video as the variable 'vid
+
+vidAddress = input("enter the address of your video")
+vid = cv2.VideoCapture(vidAddress) #Calling the source video as the variable 'vid
 prev_frame = None #empty variable to contain the previous frame
 
 '''
@@ -22,7 +23,7 @@ def overlap(recList, length):
         index = 1
         ogLength = len(recList)
         while index < ogLength:
-            if x1-70 <= recList[index][0] and y1-70 < recList[index][1] and x2 +70 >= recList[index][0] and y2+70 >= recList[index][1]:
+            if x1-50 <= recList[index][0] and y1-50 < recList[index][1] and x2 +50 >= recList[index][0] and y2+50 >= recList[index][1]:
                 if x1 > recList[index][0]:
                     x1 = recList[index][0]
                 if y1 > recList[index][1]:
